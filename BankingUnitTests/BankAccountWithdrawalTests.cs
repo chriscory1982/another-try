@@ -1,10 +1,4 @@
-﻿using BankingDomain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿
 
 namespace BankingUnitTests
 {
@@ -13,7 +7,7 @@ namespace BankingUnitTests
         [Fact]
         public void WithdrawDecreasesTheBalance()
         {
-            var account = new BankAccount(new DummyBonusCalculator());
+            var account = new BankAccount(new DummyBonusCalculator(), new Mock<INotifyTheFeds>().Object);
             decimal amountToWithdraw = 100M;
             var openingBalance = account.GetBalance();
             // When
@@ -26,7 +20,7 @@ namespace BankingUnitTests
         [Fact]
         public void CanWithdrawAllMoney()
         {
-            var account = new BankAccount(new DummyBonusCalculator());
+            var account = new BankAccount(new DummyBonusCalculator(), new Mock<INotifyTheFeds>().Object);
 
             account.Withdraw(account.GetBalance());
 
@@ -36,7 +30,7 @@ namespace BankingUnitTests
         [Fact]
         public void OverdraftNotAllowedThrowsAnException()
         {
-            var account = new BankAccount(new DummyBonusCalculator());
+            var account = new BankAccount(new DummyBonusCalculator(), new Mock<INotifyTheFeds>().Object);
 
             Assert.Throws<OverdraftException>(
                 // Anonymous Function implemented with a Lambda

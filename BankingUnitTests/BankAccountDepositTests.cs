@@ -1,11 +1,4 @@
-﻿using BankingDomain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
+﻿
 namespace BankingUnitTests;
 
 public class BankAccountDepositTests
@@ -14,7 +7,7 @@ public class BankAccountDepositTests
     public void MakingADepositIncreasesTheBalance()
     {
         // Given
-        var account = new BankAccount(new DummyBonusCalculator());
+        var account = new BankAccount(new Mock<ICalculateBonuses>().Object, new Mock<INotifyTheFeds>().Object);
         decimal amountToDeposit = 100M;
         var openingBalance = account.GetBalance();
         // When
